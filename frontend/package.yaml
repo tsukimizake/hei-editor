@@ -29,7 +29,7 @@ library:
     - /usr/local/Cellar/ncurses/6.1/lib
   extra-libraries:
     - heilib
-    - ncurses
+    - ncursesw
 
 executables:
   heifrontend-exe:

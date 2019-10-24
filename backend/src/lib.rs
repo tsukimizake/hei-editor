@@ -2,36 +2,45 @@
 extern crate lazy_static;
 extern crate ncurses;
 use ncurses as nc;
-mod Pos;
-mod Direction;
-mod Buffer;
-mod EditorError;
+mod buffer;
+mod direction;
+mod editor_error;
+mod pos;
 
-lazy_static!{
-    static ref buf:std::sync::RwLock<Buffer::Buffer> = {
-        init_ncurses();
-        let b = Buffer::Buffer::mk_empty_buf();
+lazy_static! {
+    static ref BUF: std::sync::RwLock<buffer::Buffer> = {
+        nc::setlocale(nc::LcCategory::all, "");
+        nc::initscr();
+        nc::keypad(nc::stdscr(), true);
+        nc::noecho();
+        let b = buffer::Buffer::mk_empty_buf(0,0);
         std::sync::RwLock::new(b)
     };
 }
 
-fn read_input(c:char){
-    unimplemented!();
+#[no_mangle]
+pub extern "C" fn init_ncurses() -> () {
+    nc::setlocale(nc::LcCategory::all, "");
+    nc::initscr();
+    nc::keypad(nc::stdscr(), true);
+    nc::noecho();
 }
 
 #[no_mangle]
-pub extern fn init_ncurses() -> () {
-  nc::setlocale(nc::LcCategory::all,"");
-  nc::initscr();
-  nc::keypad(nc::stdscr(), true);
-  nc::noecho();
+pub extern "C" fn end_ncurses() -> () {
+    nc::endwin();
 }
 
 #[no_mangle]
-pub extern fn interpret_cmd(cmd:char) -> () {
+pub extern "C" fn interpret_cmd(cmd: char) -> () {
     match cmd {
-        '\n' => {buf.write().unwrap().add_newline()},
-        _ => buf.write().unwrap().insert(cmd)
+        '\n' => BUF.write().unwrap().add_newline(),
+        _ => BUF.write().unwrap().insert(cmd),
     }
+    BUF.read().unwrap().redraw_all();
 }
 
+#[no_mangle]
+pub extern "C" fn save_file() -> () {
+    BUF.read().unwrap().save_file();
+}

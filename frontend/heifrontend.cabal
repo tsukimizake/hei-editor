@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1af24bafe83ce3765d0065461d432fdf886a59511215d390b38930aff1084d80
+-- hash: 06741a51dc027cb45b8bc0ec6bbda707035883a961f58636ea4fb508604978ab
 
 name:           heifrontend
 version:        0.1.0.0
@@ -37,7 +37,7 @@ library
       /usr/local/Cellar/ncurses/6.1/lib
   extra-libraries:
       heilib
-      ncurses
+      ncursesw
   build-depends:
       base >=4.7 && <5
   default-language: Haskell2010

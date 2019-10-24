@@ -1,5 +1,4 @@
 pub enum Direction {
-  Vertical,
-  Horizontal
+    Vertical,
+    Horizontal,
 }
-
