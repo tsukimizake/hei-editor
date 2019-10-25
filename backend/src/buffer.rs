@@ -77,6 +77,7 @@ impl Buffer {
             nc::addstr(sline.as_str());
             nc::nl();
         }
+        nc::refresh();
     }
 
     pub fn redraw_pos(&mut self, pos: Pos) {
@@ -152,7 +153,7 @@ impl Buffer {
 }
 
 #[test]
-fn test_newbuf() {
+fn buf_test_newbuf() {
     let _b = Buffer::mk_empty_buf(10,10);
 }
 

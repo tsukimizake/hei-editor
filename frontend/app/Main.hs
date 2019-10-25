@@ -1,3 +1,4 @@
+{-# LANGUAGE Strict #-}
 module Main where
 
 import Lib
@@ -8,6 +9,7 @@ import Data.Char
 main :: IO ()
 main = do 
   initBackend
-  input <- getChar
-  forever $ interpretCmd $ CWchar . fromIntegral . ord $ input
+  forever $ do 
+    input <- getChar
+    interpretCmd $ CWchar . fromIntegral . ord $ input
 

@@ -9,10 +9,6 @@ mod pos;
 
 lazy_static! {
     static ref BUF: std::sync::RwLock<buffer::Buffer> = {
-        nc::setlocale(nc::LcCategory::all, "");
-        nc::initscr();
-        nc::keypad(nc::stdscr(), true);
-        nc::noecho();
         let b = buffer::Buffer::mk_empty_buf(0,0);
         std::sync::RwLock::new(b)
     };
@@ -44,3 +40,4 @@ pub extern "C" fn interpret_cmd(cmd: char) -> () {
 pub extern "C" fn save_file() -> () {
     BUF.read().unwrap().save_file();
 }
+
